@@ -83,7 +83,7 @@ def do_main_function():
 	if options.draw:
 		plt.gcf().canvas.set_window_title('Cost Function')
 		plt.ylabel('Price differential')
-		plt.xlabel('iteration')
+		plt.xlabel('idx')
 		plt.grid(True)
 		plt.title('Price differential = f(descent)')
 		plt.plot([_ for _ in range(len(J_history))], J_history, 'r--', label='Precision')
@@ -96,11 +96,21 @@ def do_main_function():
 		plt.xlabel('mileage')
 		plt.grid(True)
 		plt.title('Price = f(mileage)')
-		#plt.plot([_ for _ in range(len(y_original))], y_original, 'b--', label='Real price')
-		#plt.plot([_ for _ in range(len(y_pred))], y_pred, 'r--', label='Predicted price')
 		plt.plot(X_original, y_original, 'b--', label='Real price')
 		plt.plot(X_original, y_pred, 'r--', label='Predicted price')
 		plt.legend(loc="upper right")
+		plt.show()
+
+	if options.draw:
+		y_pred = estimated_price(X_original, thetas, mileage_limits, mileage_range, price_limits)
+		plt.gcf().canvas.set_window_title('PRICE: real vs prediction')
+		plt.ylabel('Price')
+		plt.xlabel('idx')
+		plt.grid(True)
+		plt.title('Price = f(mileage)')
+		plt.plot([_ for _ in range(len(y_original))], y_original, 'b--', label='Real price')
+		plt.plot([_ for _ in range(len(y_pred))], y_pred, 'r--', label='Predicted price')
+		plt.legend(loc="left right")
 		plt.show()
 
 if __name__ == '__main__':

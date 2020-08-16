@@ -17,7 +17,6 @@ def options_parse():
 						action="store",
 						dest="mileage",
 						type=int,
-						required=True,
 						help='To set mileage to predict price')
 	parser.add_argument('--draw', '-d',
 						action="store_true",
@@ -37,6 +36,26 @@ def do_main_function():
 		sys.exit(1)
 	if options.verbose:
 		normal_message(options)
+
+	if options.mileage is None:
+		while True:
+			print('\033[35mPlease enter a mileage:\033[0m')
+			try:
+				choice = input('\033[35m \033[0m')
+			except EOFError:
+				error('EOF on input. Exit..')
+				sys.exit(0)
+			except (KeyboardInterrupt, SystemExit):
+				raise
+			except:
+				error('Unknown error on input. Exit...')
+				sys.exit(0)
+			if choice.isdigit():
+				options.mileage = int(choice)
+				break
+			else:
+				error_message('{}: Not a valid value'.format(choice))
+
 	thetas = load_theta_from_csv()
 	if options.verbose:
 		normal_message('Thetas array is {}'.format(thetas))
