@@ -74,7 +74,7 @@ def do_main_function():
 		thetas, thetas_history, J_history = fit(X, y, thetas, options)
 	except:
 		error_message('It is impossible to count gradient descent')
-		error_message(sys.exc_info()[1].args[0])
+		error_message(str(sys.exc_info()[1].args[1]))
 		sys.exit(1)
 	save_theta_to_csv(thetas)
 	if options.verbose:
