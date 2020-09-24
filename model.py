@@ -1,5 +1,7 @@
+import argparse
+import typing
 
-def normalize_data(val):
+def normalize_data(val: list) -> list:
 	"""
 	To train the model, we need to normalize the data
 	"""
@@ -9,28 +11,31 @@ def normalize_data(val):
 		return [(num - minimum) / (maximum - minimum) for num in val]
 	return [(num - minimum) for num in val]
 
-def predict(X, theta):
+def predict(X: list, theta: list) -> list:
 	"""
 	To predict and return a value
 	"""
 	return [theta[0] + x * theta[1] for x in X]
 
-def cost(X, y, theta):
+def cost(X: list, y: list, theta: list, options: argparse.Namespace) -> float:
 	"""
 	To determine the cost with given theta values
 	"""
 	y_pred = predict(X, theta)
-	return 1 / (2 * len(X)) * sum([(target - target_pred)**2 for target in y for target_pred in y_pred])
+	if options.square:
+		return 1 / (2 * len(X)) * sum([(target - target_pred)**2 for target in y for target_pred in y_pred])
+	else:
+		return sum([(target - target_pred) for target in y for target_pred in y_pred])
 
-def fit(X, y, thetas, options):
+def fit(X: list, y: list, thetas: list, options: argparse.Namespace) -> typing.Tuple[list, list, list]:
 	"""
 	To train the model
 	"""
 	count = 0
 	theta0, theta1 = thetas[0], thetas[1]
 	length = len(X)
-	theta_history = []
-	J_history = []
+	theta_history: list = []
+	J_history: list = []
 	while count < options.iter:
 		accum_theta0, accum_theta1 = 0, 0
 		for idx, _ in enumerate(X):
@@ -39,7 +44,7 @@ def fit(X, y, thetas, options):
 			accum_theta1 += (t * X[idx])
 		theta0 -= options.alpha * (accum_theta0 / length)
 		theta1 -= options.alpha * (accum_theta1 / length)
-		J_cost = cost(X, y, [theta0, theta1])
+		J_cost = cost(X, y, [theta0, theta1], options)
 		if options.auto_break and len(J_history) > 0 and J_history[-1] < J_cost:
 			if options.verbose:
 				print('A number of iterations is {}'.format(count))
@@ -49,16 +54,20 @@ def fit(X, y, thetas, options):
 			return thetas, theta_history, J_history
 		thetas[0], thetas[1] = theta0, theta1
 		theta_history.append([theta0, theta1])
-		J_history.append(cost(X, y, [theta0, theta1]))
+		J_history.append(cost(X, y, [theta0, theta1], options))
 		count += 1
 	return thetas, theta_history, J_history
 
-def raw_estimated_price(x, theta):
+def raw_estimated_price(x: float, theta: list) -> float:
 	return theta[0] + theta[1] * x
 
-def estimated_price(X, theta, mile_lim, mile_delta, price_lim):
+def estimated_price(X: list, theta: list, mile_lim: list, mile_delta: float, price_lim: list) -> list:
 	price_scaled = []
 	for x in X:
 		price = raw_estimated_price((x - mile_lim[0]) / mile_delta, theta)
-		price_scaled.append(price * (price_lim[1] - price_lim[0]) + price_lim[0])
+		if not price:
+			price_scaled.append(0.0)
+		else:
+			price_scaled.append(price * (price_lim[1] - price_lim[0]) + price_lim[0])
+
 	return price_scaled

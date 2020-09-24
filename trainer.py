@@ -9,7 +9,7 @@ from stream_funcs import *
 from csv_funcs import *
 from model import *
 
-def options_parse():
+def options_parse() -> argparse.Namespace:
 	"""
 	Function to define arguments list for command line
 	"""
@@ -46,16 +46,21 @@ def options_parse():
 						dest="draw",
 						default=False,
 						help='If set, drawing mode is set')
+	parser.add_argument('--mean_square', '-q',
+						action="store_true",
+						dest="square",
+						default=False,
+						help='If set, model calculates mean-square deviation')
 	return parser.parse_args()
 
-def do_main_function():
+def do_main_function() -> None:
 	"""
 	Main function of ft_liner_regression project
 	"""
 	try:
 		options = options_parse()
 	except:
-		error_message("Wrong type/value of command line arguments")
+		#error_message("Wrong type/value of command line arguments")
 		sys.exit(1)
 	if options.verbose:
 		normal_message(options)
@@ -110,7 +115,7 @@ def do_main_function():
 		plt.title('Price = f(mileage)')
 		plt.plot([_ for _ in range(len(y_original))], y_original, 'b--', label='Real price')
 		plt.plot([_ for _ in range(len(y_pred))], y_pred, 'r--', label='Predicted price')
-		plt.legend(loc="left right")
+		plt.legend(loc="upper left")
 		plt.show()
 
 if __name__ == '__main__':

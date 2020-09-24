@@ -1,4 +1,8 @@
 
+Typing check
+	mypy --ignore-missing-imports trainer.py
+	mypy --ignore-missing-imports predict.py
+
 
 Полезные ссылки:
 	- Параметры командной строки:
