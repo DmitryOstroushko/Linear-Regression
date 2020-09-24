@@ -1,5 +1,6 @@
 import argparse
 import typing
+from stream_funcs import *
 
 def normalize_data(val: list) -> list:
 	"""
@@ -36,6 +37,8 @@ def fit(X: list, y: list, thetas: list, options: argparse.Namespace) -> typing.T
 	length = len(X)
 	theta_history: list = []
 	J_history: list = []
+	if options.verbose:
+		normal_message('              Thetas values              | Cost function value')
 	while count < options.iter:
 		accum_theta0, accum_theta1 = 0, 0
 		for idx, _ in enumerate(X):
@@ -45,17 +48,22 @@ def fit(X: list, y: list, thetas: list, options: argparse.Namespace) -> typing.T
 		theta0 -= options.alpha * (accum_theta0 / length)
 		theta1 -= options.alpha * (accum_theta1 / length)
 		J_cost = cost(X, y, [theta0, theta1], options)
+		if options.verbose:
+			normal_message('{: .16f}, {: .16f} | {: .16f}'.format(thetas[0], thetas[1], J_cost))
 		if options.auto_break and len(J_history) > 0 and J_history[-1] < J_cost:
+			normal_message('Model is fitted')
 			if options.verbose:
-				print('A number of iterations is {}'.format(count))
-				print('The best thetas array is {}'.format(thetas))
-				print('Final thetas array is {}'.format([theta0, theta1]))
-				print('The best cost func value is {}, final cost func value is {}'.format(J_history[-1], J_cost))
+				normal_message('A number of iterations is {}'.format(count))
+			normal_message('Final thetas array is {}'.format(thetas))
 			return thetas, theta_history, J_history
 		thetas[0], thetas[1] = theta0, theta1
 		theta_history.append([theta0, theta1])
 		J_history.append(cost(X, y, [theta0, theta1], options))
 		count += 1
+	success_message('Model is fitted')
+	if options.verbose:
+		normal_message('A number of iterations is {}'.format(options.iter))
+	success_message('Final thetas array is {}'.format(thetas))
 	return thetas, theta_history, J_history
 
 def raw_estimated_price(x: float, theta: list) -> float:

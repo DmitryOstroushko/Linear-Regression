@@ -74,16 +74,14 @@ def do_main_function() -> None:
 
 	thetas = [0 ,0] if not options.coeff else load_theta_from_csv()
 	if options.verbose:
-		normal_message('Thetas array is {}'.format(thetas))
+		normal_message('Start thetas array is {}'.format(thetas))
 	try:
 		thetas, thetas_history, J_history = fit(X, y, thetas, options)
+		save_theta_to_csv(thetas)
 	except:
 		error_message('It is impossible to count gradient descent')
 		error_message(str(sys.exc_info()[1].args[1]))
 		sys.exit(1)
-	save_theta_to_csv(thetas)
-	if options.verbose:
-		normal_message('Thetas history is {}'.format(thetas_history))
 
 	if options.draw:
 		plt.gcf().canvas.set_window_title('Cost Function')
