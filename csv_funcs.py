@@ -1,10 +1,10 @@
-import typing
+from typing import List, Tuple
 import csv
 import sys
 from stream_funcs import *
 
-def load_theta_from_csv() -> list:
-	theta_list: list = []
+def load_theta_from_csv() -> List[float]:
+	theta_list: List[float] = []
 	try:
 		with open('theta.csv', 'r') as data_file:
 			data_content = csv.reader(data_file, delimiter=',')
@@ -26,9 +26,9 @@ def load_theta_from_csv() -> list:
 	success_message('Thetas array is loaded')
 	return theta_list
 
-def load_data_from_csv() -> typing.Tuple[list, list, list, int, list]:
-	X: list = []
-	y: list = []
+def load_data_from_csv() -> Tuple[List[float], List[float], List[float], float, List[float]]:
+	X: List[float] = []
+	y: List[float] = []
 	is_first_line = True
 	try:
 		with open('data.csv', 'r') as data_file:
@@ -41,23 +41,23 @@ def load_data_from_csv() -> typing.Tuple[list, list, list, int, list]:
 					else:
 						is_first_line = False
 				if data_line[0].isdigit():
-					X.append(int(data_line[0]))
-					y.append(int(data_line[1]))
+					X.append(float(data_line[0]))
+					y.append(float(data_line[1]))
 	except (FileNotFoundError):
 		error_message('File with data is not found')
 		sys.exit(1)
 	except:
 		error_message('It is impossible to analyze CSV file')
 		sys.exit(1)
-	mileage_limits: list = [min(X), max(X)]
-	mileage_range: int = mileage_limits[1] - mileage_limits[0]
+	mileage_limits: List[float] = [min(X), max(X)]
+	mileage_range: float = mileage_limits[1] - mileage_limits[0]
 	if not mileage_range:
 		mileage_range = 1
-	price_limits: list = [min(y), max(y)]
+	price_limits: List[float] = [min(y), max(y)]
 	success_message('Data is loaded')
 	return X, y, mileage_limits, mileage_range, price_limits
 
-def save_theta_to_csv(theta: list) -> None:
+def save_theta_to_csv(theta: List[float]) -> None:
 	try:
 		with open('theta.csv', 'w') as data_file:
 			for key in theta:

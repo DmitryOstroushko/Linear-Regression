@@ -3,7 +3,8 @@
 import sys
 import math
 import argparse
-import matplotlib.pyplot as plt
+from typing import Tuple, List
+import matplotlib.pyplot as plt # type: ignore
 
 from stream_funcs import *
 from csv_funcs import *
@@ -72,7 +73,7 @@ def do_main_function() -> None:
 	X = normalize_data(X_original)
 	y = normalize_data(y_original)
 
-	thetas = [0 ,0] if not options.coeff else load_theta_from_csv()
+	thetas = [0.0, 0.0] if not options.coeff else load_theta_from_csv()
 	if options.verbose:
 		normal_message('Start thetas array is {}'.format(thetas))
 	try:
@@ -90,18 +91,6 @@ def do_main_function() -> None:
 		plt.grid(True)
 		plt.title('Price differential = f(descent)')
 		plt.plot([_ for _ in range(len(J_history))], J_history, 'r--', label='Precision')
-		plt.show()
-
-	if options.draw:
-		y_pred = estimated_price(X_original, thetas, mileage_limits, mileage_range, price_limits)
-		plt.gcf().canvas.set_window_title('PRICE: real vs prediction')
-		plt.ylabel('Price')
-		plt.xlabel('mileage')
-		plt.grid(True)
-		plt.title('Price = f(mileage)')
-		plt.plot(X_original, y_original, 'b--', label='Real price')
-		plt.plot(X_original, y_pred, 'r--', label='Predicted price')
-		plt.legend(loc="upper right")
 		plt.show()
 
 	if options.draw:

@@ -1,8 +1,8 @@
 import argparse
-import typing
+from typing import Tuple, List
 from stream_funcs import *
 
-def normalize_data(val: list) -> list:
+def normalize_data(val: List[float]) -> List[float]:
 	"""
 	To train the model, we need to normalize the data
 	"""
@@ -12,13 +12,13 @@ def normalize_data(val: list) -> list:
 		return [(num - minimum) / (maximum - minimum) for num in val]
 	return [(num - minimum) for num in val]
 
-def predict(X: list, theta: list) -> list:
+def predict(X: List[float], theta: List[float]) -> List[float]:
 	"""
 	To predict and return a value
 	"""
 	return [theta[0] + x * theta[1] for x in X]
 
-def cost(X: list, y: list, theta: list, options: argparse.Namespace) -> float:
+def cost(X: List[float], y: List[float], theta: List[float], options: argparse.Namespace) -> float:
 	"""
 	To determine the cost with given theta values
 	"""
@@ -28,19 +28,19 @@ def cost(X: list, y: list, theta: list, options: argparse.Namespace) -> float:
 	else:
 		return sum([(target - target_pred) for target in y for target_pred in y_pred])
 
-def fit(X: list, y: list, thetas: list, options: argparse.Namespace) -> typing.Tuple[list, list, list]:
+def fit(X: List[float], y: List[float], thetas: List[float], options: argparse.Namespace) -> Tuple[List[float], List[List[float]], List[float]]:
 	"""
 	To train the model
 	"""
 	count = 0
 	theta0, theta1 = thetas[0], thetas[1]
 	length = len(X)
-	theta_history: list = []
-	J_history: list = []
+	theta_history: List[List[float]] = []
+	J_history: List[float] = []
 	if options.verbose:
 		normal_message('              Thetas values              | Cost function value')
 	while count < options.iter:
-		accum_theta0, accum_theta1 = 0, 0
+		accum_theta0, accum_theta1 = 0.0, 0.0
 		for idx, _ in enumerate(X):
 			t = theta0 + theta1 * X[idx] - y[idx]
 			accum_theta0 += t
@@ -66,10 +66,10 @@ def fit(X: list, y: list, thetas: list, options: argparse.Namespace) -> typing.T
 	success_message('Final thetas array is {}'.format(thetas))
 	return thetas, theta_history, J_history
 
-def raw_estimated_price(x: float, theta: list) -> float:
+def raw_estimated_price(x: float, theta: List[float]) -> float:
 	return theta[0] + theta[1] * x
 
-def estimated_price(X: list, theta: list, mile_lim: list, mile_delta: float, price_lim: list) -> list:
+def estimated_price(X: List[float], theta: List[float], mile_lim: List[float], mile_delta: float, price_lim: List[float]) -> List[float]:
 	price_scaled = []
 	for x in X:
 		price = raw_estimated_price((x - mile_lim[0]) / mile_delta, theta)
