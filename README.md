@@ -4,9 +4,19 @@
 This is the School 42 project.  
 It implements a simple linear regression with a single feature - in this case, the mileage of the car.
 
+## Prediction
+
+The first program [predict.py](https://github.com/DmitryOstroushko/Linear-Regression/blob/master/predict.py) predicts the price of a car for a given mileage.
+
+When you launch the program, it should prompt you for a mileage, and then give
+you back the estimated price for that mileage. The program will use the following
+hypothesis to predict the price :
+estimateP rice(mileage) = θ 0 + (θ 1 ∗ mileage)
+Before the run of the training program, theta0 and theta1 will be set to 0.
+
 ## Model Training
 
-The first program [trainer.py](https://github.com/DmitryOstroushko/Linear-Regression/blob/master/trainer.py) does train the model and saves coefficients for linear regression model to a file.  
+The second program [trainer.py](https://github.com/DmitryOstroushko/Linear-Regression/blob/master/trainer.py) does train the model and saves coefficients for linear regression model to a file.  
 Usage is: python trainer.py [-v] [-b] [-i] [-l] [-d] [-c] [-q]  
 There are parameters of the script:  
 * -v: If present verbosity mode is set. In verbosity mode the program prints debug messages in different colors: green - a successful operation, red - an unsuccessful operaion, and normal message. Default value is false.  
@@ -23,21 +33,11 @@ There are parameters of the script:
 3. Fits the model choosing cost function depending option `-q`.  
 Result of a model fitting is array of theta variables (theta0 and theta1).  
 In default mode the program uses the following formulas:  
-`_tmpθ[0] = learningRate * (1/m) * SUM(estimaPrice(mileage[i]) − price[i])_`  
-`_tmpθ[1] = learningRate * (1/m) * SUM(estimaPrice(mileage[i]) − price[i]) ∗ milleage[i]), i=0,...,m-1_`  
-The `__estimatePrice__` is the same as in [predict.py](https://github.com/DmitryOstroushko/Linear-Regression/blob/master/predict.py) program, but here it uses temporary, lastly computed theta0 and theta1.
+_tmpθ[0] = learningRate * (1/m) * SUM(estimaPrice(mileage[i]) − price[i])_  
+_tmpθ[1] = learningRate * (1/m) * SUM(estimaPrice(mileage[i]) − price[i]) ∗ milleage[i]), i=0,...,m-1_  
+The __estimatePrice__ is the same as in [predict.py](https://github.com/DmitryOstroushko/Linear-Regression/blob/master/predict.py) program, but here it uses temporary, lastly computed theta0 and theta1.  
 It updates theta0 and theta1 simultaneously.
-
-
 4. Saves array of theta variables (theta0 and theta1) to a file to use it later in the second program
 
-## Prediction
-
-The first program will be used to predict the price of a car for a given mileage.
-When you launch the program, it should prompt you for a mileage, and then give
-you back the estimated price for that mileage. The program will use the following
-hypothesis to predict the price :
-estimateP rice(mileage) = θ 0 + (θ 1 ∗ mileage)
-Before the run of the training program, theta0 and theta1 will be set to 0.
 
 
