@@ -17,24 +17,17 @@ There are parameters of the script:
 * -c: If present counting will start from known coefficients from CSV file. Default it starts from zeros array.  
 * -q: If present a model calculates mean-square deviation. Default it uses the linear formula.  
 
+[trainer.py](https://github.com/DmitryOstroushko/Linear-Regression/blob/master/trainer.py) performs a stream of actions:
+1. Reads a dataset file
+2. Scales data: both features and target
+3. Fits the model choosing cost function depending option `-q`.  
+Result of a model fitting is array of theta variables (theta0 and theta1).  
 
-For this goal the script performs next:  
-1. reads dataset file
-and perform a linear regression on the data.
-Once the linear regression has completed, you will save the variables theta0 and
-theta1 for use in the first program.
-You will be using the following formulas :
-X
-1 m−1
-(estimateP rice(mileage[i]) − price[i])
-tmpθ 0 = learningRate ∗
-m i=0
-tmpθ 1 = learningRate ∗
-X
-1 m−1
-(estimateP rice(mileage[i]) − price[i]) ∗ milleage[i]
-m i=0
-I let you guess what m is :)
+In default mode the program uses the following formulas:  
+tmpθ0 = learningRate * (1/m) * SUM(mileage[i]) − price[i]) ∗ milleage[i]), i=0,...,m-1
+
+4. save array of theta variables (theta0 and theta1) to a file to use it later in the second program
+
 Note that the estimatePrice is the same as in our first program, but here it uses
 your temporary, lastly computed theta0 and theta1.
 Also, don’t forget to simultaneously update theta0 and theta1.
