@@ -25,19 +25,13 @@ Result of a model fitting is array of theta variables (theta0 and theta1).
 In default mode the program uses the following formulas:  
 _tmpθ[0] = learningRate * (1/m) * SUM(estimaPrice(mileage[i]) − price[i])  
 _tmpθ[1] = learningRate * (1/m) * SUM(estimaPrice(mileage[i]) − price[i]) ∗ milleage[i]), i=0,...,m-1_  
-  
-Note that the estimatePrice is the same as in our first program, but here it uses
-your temporary, lastly computed theta0 and theta1.
-Also, don’t forget to simultaneously update theta0 and theta1.
+    The estimatePrice is the same as in [predict.py](https://github.com/DmitryOstroushko/Linear-Regression/blob/master/predict.py) program, but here it uses temporary, lastly computed theta0 and theta1.
+It updates theta0 and theta1 simultaneously.
 
 
 4. Saves array of theta variables (theta0 and theta1) to a file to use it later in the second program
 
 ## Prediction
-
-
-
-
 
 The first program will be used to predict the price of a car for a given mileage.
 When you launch the program, it should prompt you for a mileage, and then give
