@@ -23,9 +23,9 @@ There are parameters of the script:
 3. Fits the model choosing cost function depending option `-q`.  
 Result of a model fitting is array of theta variables (theta0 and theta1).  
 In default mode the program uses the following formulas:  
-_tmpθ[0] = learningRate * (1/m) * SUM(estimaPrice(mileage[i]) − price[i])  
-_tmpθ[1] = learningRate * (1/m) * SUM(estimaPrice(mileage[i]) − price[i]) ∗ milleage[i]), i=0,...,m-1_  
-    The estimatePrice is the same as in [predict.py](https://github.com/DmitryOstroushko/Linear-Regression/blob/master/predict.py) program, but here it uses temporary, lastly computed theta0 and theta1.
+`_tmpθ[0] = learningRate * (1/m) * SUM(estimaPrice(mileage[i]) − price[i])_`  
+`_tmpθ[1] = learningRate * (1/m) * SUM(estimaPrice(mileage[i]) − price[i]) ∗ milleage[i]), i=0,...,m-1_`  
+The `__estimatePrice__` is the same as in [predict.py](https://github.com/DmitryOstroushko/Linear-Regression/blob/master/predict.py) program, but here it uses temporary, lastly computed theta0 and theta1.
 It updates theta0 and theta1 simultaneously.
 
 
