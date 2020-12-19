@@ -7,17 +7,19 @@ It implements a simple linear regression with a single feature - in this case, t
 ## Prediction
 
 The first program [predict.py](https://github.com/DmitryOstroushko/Linear-Regression/blob/master/predict.py) predicts the price of a car for a given mileage.
+Usage is: `python predict.py [-v] [-m]`  
+There are parameters of the script:  
+* -v: If present verbosity mode is set. In verbosity mode the program prints debug messages in different colors: green - a successful operation, red - an unsuccessful operaion, and normal message. Default value is false.  
+* -m: It is a mileage of a car to predict a price  
 
-When you launch the program, it should prompt you for a mileage, and then give
-you back the estimated price for that mileage. The program will use the following
-hypothesis to predict the price :
-estimateP rice(mileage) = θ 0 + (θ 1 ∗ mileage)
-Before the run of the training program, theta0 and theta1 will be set to 0.
+If a mileage parameter is absent the program asks you to input mileage. Result of the program is the estimated price for that mileage. The program uses the following hypothesis to predict the price:  
+_estimateP rice(mileage) = theta0 + (theta1 ∗ mileage)_  
+Before the run of the training program, theta0 and theta1 is set to 0.
 
 ## Model Training
 
 The second program [trainer.py](https://github.com/DmitryOstroushko/Linear-Regression/blob/master/trainer.py) does train the model and saves coefficients for linear regression model to a file.  
-Usage is: python trainer.py [-v] [-b] [-i] [-l] [-d] [-c] [-q]  
+Usage is: `python trainer.py [-v] [-b] [-i] [-l] [-d] [-c] [-q]`  
 There are parameters of the script:  
 * -v: If present verbosity mode is set. In verbosity mode the program prints debug messages in different colors: green - a successful operation, red - an unsuccessful operaion, and normal message. Default value is false.  
 * -b: It is an auto break option. Default a program performs all a number of iterations which given as a paramenter. If option [-b] present a program processing can be stopped when a cost function current value is less then it on previous step.  
@@ -38,6 +40,3 @@ _tmpθ[1] = learningRate * (1/m) * SUM(estimaPrice(mileage[i]) − price[i]) ∗
 The __estimatePrice__ is the same as in [predict.py](https://github.com/DmitryOstroushko/Linear-Regression/blob/master/predict.py) program, but here it is used temporary, lastly computed theta0 and theta1.  
 It updates theta0 and theta1 simultaneously.
 4. Saves array of theta variables (theta0 and theta1) to a file to use it later in the second program
-
-
-
